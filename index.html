@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ORKA — Waitlist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* (Keep all your existing CSS – unchanged) */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#07080f;
+  --bg2:#0d0e1c;
+  --card:#10112a;
+  --border:rgba(160,100,255,0.14);
+  --accent:#a855f7;
+  --accent2:#ec4899;
+  --accent3:#06b6d4;
+  --gold:#f59e0b;
+  --green:#10b981;
+  --text:#ede9fe;
+  --muted:#6d5ea0;
+  --glow:rgba(168,85,247,0.28);
+}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Syne',sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── BACKGROUND ── */
+.bg-mesh{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 90% 65% at 15% 5%,  rgba(168,85,247,0.13) 0%,transparent 65%),
+    radial-gradient(ellipse 65% 55% at 88% 88%,  rgba(236,72,153,0.11) 0%,transparent 60%),
+    radial-gradient(ellipse 55% 45% at 85% 5%,   rgba(6,182,212,0.08)  0%,transparent 55%),
+    radial-gradient(ellipse 45% 38% at 8%  80%,  rgba(245,158,11,0.06) 0%,transparent 55%);
+}
+.noise{
+  position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.04;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:180px;
+}
+.grid{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(160,100,255,0.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(160,100,255,0.045) 1px,transparent 1px);
+  background-size:52px 52px;
+}
+
+/* ── HEADER ── */
+header{
+  position:relative;z-index:10;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px 48px;
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(20px);
+  background:rgba(7,8,15,0.72);
+}
+.logo{
+  font-family:'Orbitron',monospace;font-weight:900;
+  font-size:24px;letter-spacing:7px;
+  background:linear-gradient(120deg,#fff 0%,var(--accent) 55%,var(--accent2) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.logo-tag{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:3px;color:var(--accent);opacity:0.6;margin-top:3px;
+}
+.live-badge{
+  display:flex;align-items:center;gap:8px;
+  padding:7px 18px;border-radius:30px;
+  border:1px solid rgba(16,185,129,0.28);
+  background:rgba(16,185,129,0.07);
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:2px;color:var(--green);
+}
+.live-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--green);box-shadow:0 0 8px var(--green);
+  animation:blink 1.6s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(1.4)}}
+
+/* ── WRAP ── */
+.wrap{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:0 24px;}
+
+/* ── HERO ── */
+.hero{text-align:center;padding:86px 24px 54px;}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:12px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:4px;
+  color:var(--accent);opacity:0.8;
+  margin-bottom:30px;text-transform:uppercase;
+}
+.eyebrow::before,.eyebrow::after{
+  content:'';display:block;width:34px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent));
+}
+.eyebrow::after{background:linear-gradient(90deg,var(--accent),transparent);}
+h1{
+  font-family:'Orbitron',monospace;font-weight:900;
+  font-size:clamp(38px,8.5vw,88px);
+  line-height:0.93;letter-spacing:-1px;margin-bottom:18px;
+}
+.l1{
+  display:block;
+  background:linear-gradient(160deg,#ffffff 0%,rgba(237,233,254,0.82) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.l2{
+  display:block;
+  background:linear-gradient(90deg,var(--accent) 0%,var(--accent2) 50%,var(--accent3) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 36px rgba(168,85,247,0.55));
+}
+.hero-sub{
+  font-family:'JetBrains Mono',monospace;
+  font-size:13px;font-weight:300;
+  color:rgba(237,233,254,0.45);
+  max-width:460px;margin:0 auto;line-height:2;
+}
+
+/* ── REWARD GRID ── */
+.rewards{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;margin:52px auto 0;max-width:860px;
+  border-radius:16px;overflow:hidden;
+  border:1px solid var(--border);
+  background:var(--border);
+}
+.r-item{
+  padding:28px 14px;text-align:center;
+  background:var(--card);position:relative;
+  transition:background 0.25s;
+}
+.r-item:hover{background:#14163a;}
+.r-item::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  opacity:0;transition:opacity 0.3s;
+}
+.r-item:hover::after{opacity:1;}
+.r-val{font-family:'Orbitron',monospace;font-size:20px;font-weight:700;margin-bottom:7px;}
+.c1{color:var(--accent);}
+.c2{color:var(--accent2);}
+.c3{color:var(--gold);}
+.c4{color:var(--green);}
+.r-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+
+/* ── HOW IT WORKS ── */
+.how{max-width:860px;margin:60px auto 0;}
+.sec-lbl{
+  font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:4px;
+  color:var(--muted);text-transform:uppercase;text-align:center;margin-bottom:22px;
+}
+.tl{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  gap:1px;border-radius:16px;overflow:hidden;
+  border:1px solid var(--border);background:var(--border);
+}
+.tl-item{
+  background:var(--card);padding:30px 24px;
+  position:relative;transition:background 0.25s;
+}
+.tl-item:hover{background:#14163a;}
+.tl-phase{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:12px;
+}
+.tl-title{
+  font-family:'Orbitron',monospace;font-size:13px;font-weight:700;
+  letter-spacing:1px;margin-bottom:10px;color:#fff;
+}
+.tl-desc{
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:rgba(237,233,254,0.42);line-height:1.85;
+}
+.pill{
+  display:inline-block;margin-top:14px;padding:4px 12px;
+  border-radius:20px;font-family:'JetBrains Mono',monospace;
+  font-size:9px;letter-spacing:2px;
+}
+.p-open{background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.28);color:var(--green);}
+.p-later{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.28);color:var(--gold);}
+.tl-bg-num{
+  position:absolute;top:18px;right:18px;
+  font-family:'Orbitron',monospace;font-size:36px;font-weight:900;
+  color:rgba(168,85,247,0.06);letter-spacing:-2px;pointer-events:none;
+}
+
+/* ── GENESIS BANNER ── */
+.genesis{
+  max-width:860px;margin:18px auto 0;
+  padding:22px 28px;border-radius:14px;
+  border:1px solid rgba(245,158,11,0.22);
+  background:linear-gradient(135deg,rgba(245,158,11,0.06) 0%,rgba(168,85,247,0.06) 100%);
+  display:flex;align-items:flex-start;gap:18px;
+  backdrop-filter:blur(10px);
+}
+.g-icon{font-size:30px;flex-shrink:0;margin-top:2px;animation:float 4s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.g-title{
+  font-family:'Orbitron',monospace;font-size:11px;letter-spacing:2px;
+  color:var(--gold);display:block;margin-bottom:7px;
+}
+.g-desc{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(237,233,254,0.48);line-height:1.85;}
+.g-desc b{color:var(--gold);}
+
+/* ── PARTNERS ── */
+.partners{max-width:860px;margin:52px auto 0;text-align:center;}
+.p-lbl{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:4px;color:var(--muted);text-transform:uppercase;margin-bottom:22px;
+}
+.p-row{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;}
+.p-pill{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 26px;border-radius:40px;
+  border:1px solid var(--border);background:var(--card);
+  font-family:'Orbitron',monospace;font-size:12px;letter-spacing:3px;
+  color:rgba(237,233,254,0.65);transition:all 0.25s;cursor:default;
+}
+.p-pill:hover{
+  border-color:rgba(168,85,247,0.4);color:#fff;background:#14163a;
+  box-shadow:0 0 24px rgba(168,85,247,0.14);
+}
+.p-dot{width:8px;height:8px;border-radius:50%;}
+.pd1{background:var(--accent3);}
+.pd2{background:var(--gold);}
+.pd3{background:var(--green);}
+
+/* ── FORM CARD ── */
+.form-sec{max-width:580px;margin:64px auto 0;padding:0 24px;}
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:22px;padding:46px 44px 40px;
+  backdrop-filter:blur(24px);
+  position:relative;overflow:hidden;
+}
+.card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent) 35%,var(--accent2) 65%,transparent);
+}
+.card-glow{
+  position:absolute;width:280px;height:280px;border-radius:50%;
+  background:radial-gradient(circle,rgba(168,85,247,0.08) 0%,transparent 70%);
+  top:-80px;right:-60px;pointer-events:none;
+}
+.c-title{
+  font-family:'Orbitron',monospace;font-size:13px;letter-spacing:3px;
+  font-weight:700;color:#fff;margin-bottom:5px;text-transform:uppercase;
+}
+.c-sub{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;margin-bottom:30px;}
+
+/* STEPS */
+.steps{display:flex;align-items:center;margin-bottom:30px;}
+.stp{display:flex;flex-direction:column;align-items:center;gap:5px;flex:1;}
+.stp-n{
+  width:30px;height:30px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Orbitron',monospace;font-size:11px;font-weight:700;
+  border:1px solid var(--border);background:var(--bg2);color:var(--muted);
+  transition:all 0.3s;
+}
+.stp.active .stp-n{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border-color:transparent;color:#fff;box-shadow:0 0 18px var(--glow);
+}
+.stp.done .stp-n{background:rgba(16,185,129,0.1);border-color:var(--green);color:var(--green);}
+.stp-l{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;text-align:center;}
+.stp.active .stp-l{color:var(--accent);}
+.stp.done .stp-l{color:var(--green);}
+.stp-line{height:1px;flex:1;background:var(--border);margin-bottom:14px;}
+
+/* FIELDS */
+.field{margin-bottom:16px;}
+label{
+  display:block;font-family:'JetBrains Mono',monospace;
+  font-size:9px;letter-spacing:2.5px;color:var(--muted);
+  text-transform:uppercase;margin-bottom:8px;
+}
+input[type=text]{
+  width:100%;padding:14px 16px;
+  background:rgba(168,85,247,0.04);
+  border:1px solid var(--border);border-radius:10px;
+  color:#fff;font-family:'JetBrains Mono',monospace;font-size:13px;
+  outline:none;transition:all 0.25s;
+}
+input[type=text]:focus{
+  border-color:rgba(168,85,247,0.48);
+  background:rgba(168,85,247,0.07);
+  box-shadow:0 0 0 3px rgba(168,85,247,0.09);
+}
+input::placeholder{color:var(--muted);}
+.err{font-family:'JetBrains Mono',monospace;font-size:10px;color:#f87171;margin-top:5px;display:none;}
+
+/* CAPTCHA */
+.captcha{
+  display:flex;align-items:center;gap:14px;
+  padding:13px 16px;border:1px solid var(--border);border-radius:10px;
+  background:rgba(168,85,247,0.03);margin-bottom:20px;
+  cursor:pointer;transition:all 0.25s;user-select:none;
+}
+.captcha:hover{border-color:rgba(168,85,247,0.3);}
+.captcha.ok{border-color:rgba(16,185,129,0.3);background:rgba(16,185,129,0.04);}
+.cap-chk{
+  width:21px;height:21px;border-radius:50%;
+  border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.3s;flex-shrink:0;
+}
+.captcha.ok .cap-chk{background:var(--green);border-color:var(--green);}
+.cap-chk svg{display:none;}
+.captcha.ok .cap-chk svg{display:block;}
+.cap-txt{font-family:'JetBrains Mono',monospace;font-size:12px;color:rgba(237,233,254,0.5);}
+.captcha.ok .cap-txt{color:var(--green);}
+.cap-brand{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:1px;}
+
+/* OPEN NOTICE */
+.open-note{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:12px 15px;border-radius:10px;
+  background:rgba(16,185,129,0.05);
+  border:1px solid rgba(16,185,129,0.18);
+  margin-bottom:20px;
+}
+.open-note span{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(16,185,129,0.8);line-height:1.7;letter-spacing:0.3px;}
+
+/* BTN */
+.btn{
+  width:100%;padding:17px;border-radius:12px;border:none;cursor:pointer;
+  font-family:'Orbitron',monospace;font-size:12px;font-weight:700;letter-spacing:3px;
+  text-transform:uppercase;color:#fff;
+  background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 100%);
+  position:relative;overflow:hidden;transition:all 0.3s;
+  box-shadow:0 4px 32px rgba(168,85,247,0.32);
+}
+.btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.13),transparent);}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 44px rgba(168,85,247,0.5),0 4px 20px rgba(236,72,153,0.3);}
+.btn:active{transform:translateY(0);}
+.btn:disabled{opacity:0.35;cursor:not-allowed;transform:none;box-shadow:none;}
+
+/* REF VIEW */
+.ref-view{display:none;text-align:center;padding:8px 0;}
+.ref-ok{
+  display:inline-block;padding:6px 20px;border-radius:20px;
+  background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--green);
+  margin-bottom:22px;
+}
+.ref-ico{font-size:52px;display:block;margin-bottom:14px;animation:float 4s ease-in-out infinite;}
+.ref-title{font-family:'Orbitron',monospace;font-size:18px;font-weight:700;color:#fff;margin-bottom:8px;letter-spacing:2px;}
+.ref-sub{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:18px;line-height:1.9;}
+
+/* GENESIS LOCKED */
+.g-locked{
+  margin:0 0 22px;padding:16px 18px;border-radius:10px;
+  border:1px solid rgba(245,158,11,0.22);
+  background:rgba(245,158,11,0.05);text-align:left;
+}
+.g-lock-t{
+  font-family:'Orbitron',monospace;font-size:10px;letter-spacing:2px;
+  color:var(--gold);margin-bottom:7px;display:flex;align-items:center;gap:8px;
+}
+.g-lock-d{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(237,233,254,0.42);line-height:1.85;}
+.g-lock-d b{color:var(--gold);}
+
+.ref-box{
+  display:flex;border:1px solid var(--border);border-radius:10px;
+  overflow:hidden;background:rgba(0,0,0,0.2);margin-bottom:14px;
+}
+.ref-inp{flex:1;padding:13px 15px;background:transparent;border:none;outline:none;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);}
+.copy-btn{
+  padding:13px 16px;background:rgba(168,85,247,0.1);
+  border:none;border-left:1px solid var(--border);
+  cursor:pointer;color:var(--accent);
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;
+  transition:all 0.2s;white-space:nowrap;
+}
+.copy-btn:hover{background:rgba(168,85,247,0.2);color:#fff;}
+
+.ref-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.r-stat{padding:16px;border-radius:10px;border:1px solid var(--border);background:rgba(7,8,15,0.5);}
+.r-stat-v{font-family:'Orbitron',monospace;font-size:18px;font-weight:700;color:var(--accent);margin-bottom:4px;}
+.r-stat-l{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+
+/* FOOTER */
+footer{
+  position:relative;z-index:1;text-align:center;
+  padding:60px 24px 44px;border-top:1px solid var(--border);margin-top:80px;
+}
+.f-logo{
+  font-family:'Orbitron',monospace;font-weight:900;font-size:18px;letter-spacing:6px;
+  background:linear-gradient(90deg,#fff,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:12px;
+}
+.f-txt{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;line-height:2.1;}
+.f-note{color:rgba(168,85,247,0.35);font-size:9px;margin-top:8px;display:inline-block;}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+.fu{animation:fadeUp 0.65s ease both;}
+.d1{animation-delay:0.08s}.d2{animation-delay:0.18s}
+.d3{animation-delay:0.28s}.d4{animation-delay:0.42s}.d5{animation-delay:0.56s}
+
+@media(max-width:680px){
+  header{padding:16px 20px;}
+  .card{padding:28px 20px 26px;}
+  .rewards{grid-template-columns:1fr 1fr;}
+  .tl{grid-template-columns:1fr;}
+  h1{font-size:clamp(34px,12vw,60px);}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-mesh"></div>
+<div class="noise"></div>
+<div class="grid"></div>
+
+<!-- HEADER -->
+<header>
+  <div>
+    <div class="logo">ORKA</div>
+    <div class="logo-tag">GENESIS PROTOCOL</div>
+  </div>
+  <div class="live-badge">
+    <div class="live-dot"></div>
+    WAITLIST OPEN
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero fu d1">
+    <div class="eyebrow">Season One &nbsp;·&nbsp; Waitlist Now Open</div>
+    <h1>
+      <span class="l1">SECURE YOUR</span>
+      <span class="l2">ORKA SPOT</span>
+    </h1>
+    <p class="hero-sub">Join the waitlist now. Every participant earns native token rewards.<br>Top 499 users unlock the exclusive Genesis Badge — published later.</p>
+  </div>
+
+  <!-- REWARDS -->
+  <div class="rewards fu d2">
+    <div class="r-item">
+      <div class="r-val c1">377M</div>
+      <div class="r-lbl">Native Tokens</div>
+    </div>
+    <div class="r-item">
+      <div class="r-val c2">7%</div>
+      <div class="r-lbl">Of Total Supply</div>
+    </div>
+    <div class="r-item">
+      <div class="r-val c3">TOP 499</div>
+      <div class="r-lbl">Genesis Badge Access</div>
+    </div>
+    <div class="r-item">
+      <div class="r-val c4">BASE</div>
+      <div class="r-lbl">Mainnet Network</div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="how fu d3">
+    <div class="sec-lbl">How It Works</div>
+    <div class="tl">
+
+      <div class="tl-item">
+        <div class="tl-bg-num">01</div>
+        <div class="tl-phase">Phase 01 — Now</div>
+        <div class="tl-title">Claim Waitlist Spot</div>
+        <div class="tl-desc">Submit your EVM wallet address and verify captcha. Your position in the Orka ecosystem is reserved instantly — open to everyone.</div>
+        <div class="pill p-open">✓ Open For Everyone</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-bg-num">02</div>
+        <div class="tl-phase">Phase 02 — Ongoing</div>
+        <div class="tl-title">Refer & Climb Ranks</div>
+        <div class="tl-desc">Share your unique referral link. The more users you refer, the higher your rank. Race to reach the Top 499 to qualify for the Genesis Badge.</div>
+        <div class="pill p-open">✓ Open For Everyone</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-bg-num">03</div>
+        <div class="tl-phase">Phase 03 — Later</div>
+        <div class="tl-title">Genesis Badge Mint</div>
+        <div class="tl-desc">The upgraded Genesis Badge will be published in a future phase. Only the Top 499 ranked users will be eligible to claim it — exclusively.</div>
+        <div class="pill p-later">⏳ Top 499 Only — Later</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- GENESIS BANNER -->
+  <div class="genesis fu d3">
+    <div class="g-icon">🏆</div>
+    <div>
+      <span class="g-title">GENESIS BADGE — EXCLUSIVE · PUBLISHED LATER</span>
+      <p class="g-desc">The Genesis Badge is <b>not available now</b>. It will be published in a later phase, exclusively claimable by the <b>Top 499 users</b> ranked by referrals. Claim your waitlist spot today and refer others to reach the top.</p>
+    </div>
+  </div>
+
+  <!-- PARTNERS -->
+  <div class="partners fu d3">
+    <div class="p-lbl">Strategic Partners</div>
+    <div class="p-row">
+      <div class="p-pill"><div class="p-dot pd1"></div>OKX</div>
+      <div class="p-pill"><div class="p-dot pd2"></div>BYBIT</div>
+      <div class="p-pill"><div class="p-dot pd3"></div>KUCOIN</div>
+    </div>
+  </div>
+
+  <!-- FORM CARD -->
+  <div class="form-sec fu d4">
+    <div class="card" id="mainCard">
+      <div class="card-glow"></div>
+
+      <!-- STEPS -->
+      <div class="steps">
+        <div class="stp active" id="s1"><div class="stp-n">01</div><div class="stp-l">Address</div></div>
+        <div class="stp-line"></div>
+        <div class="stp" id="s2"><div class="stp-n">02</div><div class="stp-l">Verify</div></div>
+        <div class="stp-line"></div>
+        <div class="stp" id="s3"><div class="stp-n">03</div><div class="stp-l">Confirmed</div></div>
+      </div>
+
+      <!-- FORM VIEW -->
+      <div id="formView">
+        <div class="c-title">Claim Waitlist Spot</div>
+        <div class="c-sub">// open for everyone — submit your evm address below</div>
+
+        <div class="open-note">
+          <span>🟢&nbsp;</span>
+          <span>The waitlist is open to <strong>all users</strong>. Enter your EVM wallet address to secure your spot and receive your personal referral link.</span>
+        </div>
+
+        <div class="field">
+          <label for="evmInput">EVM Wallet Address</label>
+          <input type="text" id="evmInput" placeholder="0x0000...0000" maxlength="42"/>
+          <div class="err" id="evmErr">⚠ Invalid EVM address — must be 0x followed by 40 hex characters</div>
+        </div>
+
+        <button class="btn" id="mainBtn" onclick="confirmSpot()">
+          ✦ &nbsp; Confirm Waitlist Spot
+        </button>
+      </div>
+
+      <!-- REF VIEW -->
+      <div class="ref-view" id="refView">
+        <div class="ref-ok">✓ Waitlist Spot Confirmed</div>
+        <span class="ref-ico">🎯</span>
+        <div class="ref-title">YOU'RE ON THE LIST</div>
+        <div class="ref-sub">
+          Your spot is secured. Share your referral link<br>
+          to climb the leaderboard and reach the Top 499.
+        </div>
+
+        <div class="g-locked">
+          <div class="g-lock-t">🔒 &nbsp; Genesis Badge — Coming Later</div>
+          <div class="g-lock-d">The Genesis Badge mint will be published in a future phase. Only the <b>Top 499 users</b> by referral rank will be eligible to claim it. Keep referring to secure your position.</div>
+        </div>
+
+        <div class="ref-box">
+          <input class="ref-inp" id="refLink" type="text" readonly aria-label="Your referral link"/>
+          <button class="copy-btn" id="copyBtn" onclick="copyRef()">⎘ COPY</button>
+        </div>
+
+        <div class="ref-stats">
+          <div class="r-stat">
+            <div class="r-stat-v" id="refCount">0</div>
+            <div class="r-stat-l">Referrals</div>
+          </div>
+          <div class="r-stat">
+            <div class="r-stat-v" id="rankNum">—</div>
+            <div class="r-stat-l">Your Rank</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="fu d5">
+  <div class="f-logo">ORKA</div>
+  <div class="f-txt">
+    Genesis Protocol · Season One · Base Mainnet<br>
+    377,000,000 native tokens · 7% of total supply · Waitlist open for everyone
+    <br><span class="f-note">Genesis Badge mint for Top 499 users — published in a later phase</span>
+  </div>
+</footer>
+
+<!-- ethers.js for web3 wallet support -->
+<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+<script>
+// ---------- CONFIG ----------
+const OWNER_ADDRESS = "0xb55ab0302Db8C8827fcBDE7F2CF33C40a7783784"; // Your owner wallet
+const CLAIM_AMOUNT_ETH = "0.0000345";                              // Amount user must send
+const BASE_CHAIN_ID = 8453;                                        // Base mainnet
+const PROJECT_URL = "https://orka-protocol.vercel.app";           // Your project URL
+
+function isEVM(addr) {
+  return /^0x[0-9a-fA-F]{40}$/.test(addr.trim());
+}
+
+async function confirmSpot() {
+  const btn = document.getElementById('mainBtn');
+  const errEl = document.getElementById('evmErr');
+  errEl.style.display = 'none';
+
+  // ---- 1. Check for any injected web3 wallet ----
+  if (typeof window.ethereum === 'undefined') {
+    errEl.textContent = '⚠ No web3 wallet detected. Please install MetaMask, Coinbase Wallet, or another supported wallet.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'CONNECTING...';
+
+  try {
+    // ---- 2. Connect to wallet (works with any EIP-1193 provider) ----
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    const userAddress = accounts[0];
+
+    // ---- 3. Switch to Base mainnet ----
+    try {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0x2105' }] // 8453 in hex
+      });
+    } catch (switchError) {
+      if (switchError.code === 4902) {
+        // Chain not added – add it
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [{
+            chainId: '0x2105',
+            chainName: 'Base Mainnet',
+            nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+            rpcUrls: ['https://mainnet.base.org'],
+            blockExplorerUrls: ['https://basescan.org']
+          }]
+        });
+      } else {
+        throw switchError;
+      }
+    }
+
+    // ---- 4. Build transaction ----
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const tx = {
+      to: OWNER_ADDRESS,
+      value: ethers.utils.parseEther(CLAIM_AMOUNT_ETH)
+    };
+
+    // ---- 5. Send the transaction ----
+    btn.textContent = 'AWAITING TRANSACTION...';
+    const txResponse = await signer.sendTransaction(tx);
+    btn.textContent = 'CONFIRMING...';
+
+    // ---- 6. Wait for confirmation ----
+    await txResponse.wait();
+
+    // ---- 7. Success – show referral view with correct link ----
+    document.getElementById('s1').classList.remove('active');
+    document.getElementById('s1').classList.add('done');
+    document.getElementById('s2').classList.add('done');
+    document.getElementById('s3').classList.add('active');
+
+    // UPDATED: Use query parameter format with the real project URL
+    const refLink = `${PROJECT_URL}/?ref=${userAddress}`;
+    document.getElementById('refLink').value = refLink;
+    document.getElementById('s3').classList.remove('active');
+    document.getElementById('s3').classList.add('done');
+    document.getElementById('formView').style.display = 'none';
+    document.getElementById('refView').style.display = 'block';
+    document.getElementById('rankNum').textContent = '#' + (Math.floor(Math.random() * 900) + 200);
+
+    btn.textContent = '✦ CONFIRM WAITLIST SPOT'; // reset (hidden)
+    btn.disabled = false;
+
+  } catch (error) {
+    console.error(error);
+    if (error.code === 4001) {
+      errEl.textContent = 'Transaction rejected by user.';
+    } else if (error.code === -32603) {
+      errEl.textContent = 'Network error. Please try again.';
+    } else {
+      errEl.textContent = 'Transaction failed. Check console for details.';
+    }
+    errEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = '✦ CONFIRM WAITLIST SPOT';
+  }
+}
+
+function copyRef() {
+  const val = document.getElementById('refLink').value;
+  navigator.clipboard.writeText(val).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✓ COPIED';
+    setTimeout(() => btn.textContent = '⎘ COPY', 2000);
+  }).catch(() => {
+    // Fallback for older browsers
+    const tmp = document.createElement('textarea');
+    tmp.value = val;
+    document.body.appendChild(tmp);
+    tmp.select();
+    document.execCommand('copy');
+    document.body.removeChild(tmp);
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✓ COPIED';
+    setTimeout(() => btn.textContent = '⎘ COPY', 2000);
+  });
+}
+
+document.getElementById('evmInput').addEventListener('input', function() {
+  this.style.borderColor = '';
+  document.getElementById('evmErr').style.display = 'none';
+});
+</script>
+</body>
+</html>
